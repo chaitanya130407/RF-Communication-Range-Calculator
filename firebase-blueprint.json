@@ -1,0 +1,59 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account document stored under /users/{userId}",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Calculation": {
+      "title": "Calculation",
+      "description": "RF range calculation record stored under /users/{userId}/calculations/{calculationId}",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "frequency": { "type": "number" },
+        "frequencyUnit": { "type": "string", "enum": ["MHz", "GHz"] },
+        "transmitPower": { "type": "number" },
+        "transmitPowerUnit": { "type": "string", "enum": ["dBm", "W"] },
+        "txAntennaGain": { "type": "number" },
+        "rxAntennaGain": { "type": "number" },
+        "receiverSensitivity": { "type": "number" },
+        "systemLoss": { "type": "number" },
+        "calculatedFSPL": { "type": "number" },
+        "estimatedRange": { "type": "number" },
+        "rangeUnit": { "type": "string", "enum": ["km", "m"] },
+        "wavelength": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "frequency",
+        "frequencyUnit",
+        "transmitPower",
+        "transmitPowerUnit",
+        "txAntennaGain",
+        "rxAntennaGain",
+        "receiverSensitivity",
+        "systemLoss",
+        "calculatedFSPL",
+        "estimatedRange",
+        "wavelength"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User root document enforcing isolation by userId = auth.uid"
+    },
+    "/users/{userId}/calculations/{calculationId}": {
+      "schema": { "$ref": "#/entities/Calculation" },
+      "description": "Collection of RF communication range calculations belonging strictly to the authenticated user"
+    }
+  }
+}

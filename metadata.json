@@ -1,0 +1,6 @@
+{
+  "name": "RF Communication Range Calculator",
+  "description": "A theoretical RF link budget and communication range simulation tool .",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
